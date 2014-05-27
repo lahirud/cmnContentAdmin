@@ -1,4 +1,5 @@
 import sbt._
+import play.Project._
 
 object ApplicationBuild extends Build {
 
@@ -6,7 +7,8 @@ object ApplicationBuild extends Build {
   val appVersion = "0.1-SNAPSHOT"
 
 val appDependencies = Seq(
-    "net.vz.mongodb.jackson" %% "play-mongo-jackson-mapper" % "1.1.0" 
+    javaCore,
+    "net.vz.mongodb.jackson" %% "play-mongo-jackson-mapper" % "1.1.0"
 )
 
 

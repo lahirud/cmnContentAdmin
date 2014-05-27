@@ -1,6 +1,11 @@
 package controllers;
 
+import org.joda.time.DateTime;
+
+import com.fasterxml.jackson.databind.JsonNode;
+
 import play.*;
+import play.libs.Json;
 import play.mvc.*;
 import play.data.*;
 
@@ -15,6 +20,7 @@ public class Application extends Controller {
 //    }
     
     static Form<Task> taskForm = Form.form(Task.class);
+    static Form<Phone> phoneForm = Form.form(Phone.class);
     
     public static Result upload() {
     	return ok(upload.render("upload page"));
@@ -49,6 +55,24 @@ public class Application extends Controller {
     public static Result deleteTask(String id) {
       Task.delete(id);
       return redirect(routes.Application.tasks());
+    }
+    
+    public static Result getPhones() {
+    	return ok(Json.toJson(Phone.all()));
+    }
+    
+    @BodyParser.Of(BodyParser.Json.class) 
+    public static Result savePhone() {
+		JsonNode json = request().body().asJson();
+		Phone phone = new Phone();
+		phone.name = json.findValue("name").asText();
+		phone.id = json.findPath("id").asText();
+		phone.age = json.findPath("age").asInt();
+		
+		Phone.create(phone);
+		
+		return redirect(routes.Application.getPhones());
+
     }
 
 }
