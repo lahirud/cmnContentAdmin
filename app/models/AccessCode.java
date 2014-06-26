@@ -12,10 +12,11 @@ import javax.persistence.*;
 
 public class AccessCode{
     
-  @Id
+  /*@Id
   @ObjectId
-  public String id;
+  public String id;*/
   
+  @Id
   public String accessCode;
   public Date expirayDate;
   public int redemptionQuota;
@@ -28,10 +29,8 @@ public class AccessCode{
 
   }
 
-  
-
   public static void create(AccessCode accesscode) {
     AccessCode.coll.save(accesscode);
   }
 
-  }
+}

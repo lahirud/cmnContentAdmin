@@ -81,8 +81,8 @@ public class Application extends Controller {
     	models.Content myContent = new models.Content();
     	myContent.contentId = "c" + System.nanoTime();
     	myContent.title = "test3";
-    	myContent.subject = "physics2";
-    	myContent.fileId = "666.jpg";
+    	myContent.subject = "physics7";
+    	myContent.fileId = "777.jpg";
     	myContent.accesscode = new ArrayList();
     	
     	models.Content.create(myContent);
@@ -91,18 +91,10 @@ public class Application extends Controller {
     
     public static Result addAccessCode(){
     	
-    	models.Content myContent = models.Content.find("c804033125905038"); // should get from request
-    	myContent.accesscode.add("cde802085812928808");
-    	//models.Content.update("c804033125905038", "cde802085812928808"); // contentID & accesscode should get from request
-    	/*models.Content myContent = new models.Content();
-    	myContent.contentId = "c804033125905038"; // should get from the request
-    	myContent.title = "test2";
-    	myContent.subject = "physics";
-    	myContent.fileId = "678.jpg";
-    	myContent.accesscode*/
-    	
-    	models.Content.update(myContent);
-    	return ok("updated");
+    	models.Content myContent = models.Content.find("c894268118916719"); // should get from request
+    	myContent.accesscode.add("cde802085812928555"); // should get from request
+    	models.Content.create(myContent);
+    	return ok("accesscode added");
     }
     
     public static Result createAccessCode() {
@@ -118,7 +110,7 @@ public class Application extends Controller {
     	myContent.expirayDate = date;
     	myContent.redemptionQuota = 1;
     	myContent.noOfRedemptions = 0;
-    	myContent.contentID = "C1234567893"; // should come from the request
+    	myContent.contentID = "c894268118916719"; // should come from the request
     	
     	models.AccessCode.create(myContent);
     	return ok("Access Code created");

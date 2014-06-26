@@ -12,10 +12,10 @@ import javax.persistence.*;
 
 public class Content{
     
-  @Id
+  /*@Id
   @ObjectId
-  public String id;
-  
+  public String id;*/
+  @Id
   public String contentId;
   public String title;
   public String subject;
@@ -33,19 +33,15 @@ public class Content{
   public static void create(Content content) {
     Content.coll.save(content);
   }
-  
+
   public static Content find(String contentId) {
-	    DBCursor<Content> cursor = Content.coll.find().is("contentId", contentId);
-	    return cursor.next();
+	    return Content.coll.findOneById(contentId);
+	    //return cursor.next();
   }
-  
-  /*public static void update(String contentId, String accesscode) {
-	  Content.coll.updateById(contentId, DBUpdate.push("accesscode", accesscode));
-  }*/
   
   public static void update(Content content) {
 	  
 	  //org.mongojack.DBQuery.Query q3 = DBQuery.is("accesscode", new org.bson.types.ObjectId(strId));
-	  Content.coll.update(content);
+	  //Content.coll.update(content);
   }
-  }
+}

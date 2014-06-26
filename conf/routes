@@ -20,4 +20,4 @@ POST /tasks/:id/delete controllers.Application.deleteTask(id: String)
 GET /content controllers.Application.content()
 GET /content/accesscode controllers.Application.addAccessCode()
 
-GET /accesscode/create controllers.Application.createAccessCode()
+GET /accesscode controllers.Application.createAccessCode()
