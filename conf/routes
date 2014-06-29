@@ -7,20 +7,23 @@ GET / controllers.Assets.at(path="/public", file="index.html")
 GET /public/*file controllers.Assets.at(path="/public", file)
 GET /partials/*file controllers.Assets.at(path="/public/partials", file)
 
-GET /upload/ controllers.Application.upload()
-GET /create/ controllers.Application.create()
-GET /api/phones controllers.Application.getPhones()
-POST /api/phones/save controllers.Application.savePhone()
+#GET /upload/ controllers.Application.upload()
+#GET /create/ controllers.Application.create()
+#GET /api/phones controllers.Application.getPhones()
+#POST /api/phones/save controllers.Application.savePhone()
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
+#GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
 
-GET /tasks controllers.Application.tasks()
-POST /tasks controllers.Application.newTask()
-POST /tasks/:id/delete controllers.Application.deleteTask(id: String)
+#GET /tasks controllers.Application.tasks()
+#POST /tasks controllers.Application.newTask()
+#POST /tasks/:id/delete controllers.Application.deleteTask(id: String)
+POST /content/create controllers.Application.createContent()
+#GET /content/accesscode controllers.Application.addAccessCode()
+#GET /accesscode controllers.Application.createAccessCode()
 
-GET /content controllers.Application.content()
-GET /content/accesscode controllers.Application.addAccessCode()
-
-GET /accesscode controllers.Application.createAccessCode()
+POST /content/create controllers.Application.createContent()
+POST /content/find controllers.Application.findContent()
+POST /content/generateAccessCode controllers.Application.generateAccessCode()
+GET /content/all controllers.Application.getAllContents

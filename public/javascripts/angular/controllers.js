@@ -21,14 +21,14 @@ contentAppControllers.controller('ContentCreateCtrl', ['$scope','$http',
         $scope.cntFormSubmit = function (cnt) {
             $http({
                 method: 'POST',
-                url: 'MockHandlers/ContentHandler.ashx',
+                url: 'content/create',
                 data: { content: cnt }
             }).
                 success(function (data, status, headers, config) {
 
-                    if (data.cntResponse.trStatus == 'success') {
+                    if (data.status == 'OK') {
                         $scope.statusMessage = "Content Added successfully";
-                    } else if (data.cntResponse.trStatus == 'error') {
+                    } else if (data.status == 'NG') {
                         $scope.statusMessage = "Failed to add content";
                     }
                 }).
@@ -45,8 +45,8 @@ contentAppControllers.controller('ContentCreateCtrl', ['$scope','$http',
 
 contentAppControllers.controller('ContentEditCtrl', function ($scope, $http, $filter, ngTableParams) {
 
-    $http.get('mockObjects/content.json').success(function (data_) {
-        var data = data_;
+    $http.get('content/all').success(function (data_) {
+        var data = data_.content;
 
         $scope.tableParams = new ngTableParams({
             page: 1,            // show first page
@@ -95,16 +95,16 @@ contentAppControllers.controller('AccessCodeAdd', ['$scope', '$http',
 
             $http({
                 method: 'POST',
-                url: 'MockHandlers/MockHandlerGeneral.ashx',
+                url: 'content/find',
                 data: { searchTerm : searchTerm }
             }).
                 success(function (data, status, headers, config) {
 
-                    if (data.cntResponse.trStatus == 'success') {
+                    if (data.status == 'OK') {
                         $scope.statusMessage.type = 'success';
-                        $scope.tableData = data.cntResponse.content;
+                        $scope.tableData = data.content;
 
-                    } else if (data.cntResponse.trStatus == 'error') {
+                    } else if (data.status == 'NG') {
                         $scope.statusMessage = "Content not found.";
                         $scope.statusMessage.type = 'warn';
                     }
@@ -132,16 +132,15 @@ contentAppControllers.controller('AccessCodeAdd', ['$scope', '$http',
         $scope.generateAccessCode = function () {
             $http({
                 method: 'POST',
-                url: 'MockHandlers/MockAccessKeyHandler.ashx',
-                data: { contentId: $scope.contentId }
+                url: 'content/generateAccessCode',
+                data: { contentId: $scope.selectedContentId }
             }).
                 success(function (data, status, headers, config) {
 
-                    if (data.cntResponse.trStatus == 'success') {
-                        $scope.accessKey = data.cntResponse.accessKey;
-                        console.log(data.cntResponse.accessKey);
+                    if (data.status == 'OK') {
+                        $scope.accessKey = data.accessKey;
 
-                    } else if (data.cntResponse.trStatus == 'error') {
+                    } else if (data.status == 'NG') {
                         $scope.statusMessage = "Key Generation Failed.";
                         $scope.statusMessage.type = 'warn';
                     }
