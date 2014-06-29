@@ -7,6 +7,7 @@ import net.vz.mongodb.jackson.Id;
 import net.vz.mongodb.jackson.ObjectId;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.mongojack.*;
+import com.mongodb.QueryOperators;
 
 import javax.persistence.*;
 
@@ -34,8 +35,14 @@ public class Content{
     Content.coll.save(content);
   }
 
-  public static Content find(String contentId) {
+  public static Content findContent(String contentId) {
 	    return Content.coll.findOneById(contentId);
+	    //return cursor.next();
+  }
+  
+  public static Content findFileId(String fileId) {
+	  return Content.coll.find(DBQuery.is("fileid", fileId));
+	  
 	    //return cursor.next();
   }
   

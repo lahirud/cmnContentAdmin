@@ -77,22 +77,22 @@ public class Application extends Controller {
     }
     
     
-    public static Result content() {
+    public static Result createContent() {
     	models.Content myContent = new models.Content();
     	myContent.contentId = "c" + System.nanoTime();
-    	myContent.title = "test3";
+    	myContent.title = "test888";
     	myContent.subject = "physics7";
-    	myContent.fileId = "777.jpg";
+    	myContent.fileId = "888.jpg";
     	myContent.accesscode = new ArrayList();
     	
     	models.Content.create(myContent);
     	return ok("created");
     }
     
-    public static Result addAccessCode(){
+    public static Result addAccessCodeToContent(String accessCode){
     	
-    	models.Content myContent = models.Content.find("c894268118916719"); // should get from request
-    	myContent.accesscode.add("cde802085812928555"); // should get from request
+    	models.Content myContent = models.Content.findContent("c894268118916719"); // should get from request
+    	myContent.accesscode.add(accessCode); // should get from request
     	models.Content.create(myContent);
     	return ok("accesscode added");
     }
@@ -105,15 +105,26 @@ public class Application extends Controller {
     	cal.add(Calendar.DATE, 30); // add 30 days  
     	date = cal.getTime();
     	
-    	models.AccessCode myContent = new models.AccessCode();
-    	myContent.accessCode = "cde" + System.nanoTime();
-    	myContent.expirayDate = date;
-    	myContent.redemptionQuota = 1;
-    	myContent.noOfRedemptions = 0;
-    	myContent.contentID = "c894268118916719"; // should come from the request
     	
-    	models.AccessCode.create(myContent);
-    	return ok("Access Code created");
+    	models.AccessCode myAccessCode = new models.AccessCode();
+    	myAccessCode.accessCode = "cde" + System.nanoTime();
+    	myAccessCode.expirayDate = date;
+    	myAccessCode.redemptionQuota = 1;
+    	myAccessCode.noOfRedemptions = 0;
+    	myAccessCode.contentID = "c894268118916719"; // should come from the request
+    	
+    	models.AccessCode.create(myAccessCode);
+    	
+    	addAccessCodeToContent(myAccessCode.accessCode);
+    	
+    	return ok(Json.toJson(myAccessCode.accessCode));
     }
+    
+    public static Result findContent(){  //find content by fileId
+    	
+    	models.Content myContent = models.Content.findFileId("777.jpg"); // should get from request
+    	return ok(myContent.contentId);
+    }
+    
 
 }
