@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en" ng-app="contentApp">
+<head>
+    <meta charset="utf-8">
+
+
+    <link rel="stylesheet" href="public/bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="public/stylesheets/animations.css">
+    <link rel="stylesheet" href="public/stylesheets/app.css">
+    <link rel="stylesheet" href="public/bower_components/table/ng-table.min.css">
+
+    <script src="public/bower_components/jquery/jquery.js"></script>
+    <script src="public/bower_components/angular/angular.js"></script>
+    <script src="public/bower_components/angular-animate/angular-animate.js"></script>
+    <script src="public/bower_components/angular-route/angular-route.js"></script>
+    <script src="public/bower_components/angular-resource/angular-resource.js"></script>
+    <script src="public/javascripts/angular/app.js"></script>
+    <script src="public/javascripts/angular/animations.js"></script>
+    <script src="public/javascripts/angular/controllers.js"></script>
+    <script src="public/javascripts/angular/filters.js"></script>
+    <script src="public/javascripts/angular/services.js"></script>
+    <script src="public/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="public/bower_components/table/ng-table.min.js"></script>
+
+    <title ng-bind="'CMS - ' + $root.title">CMS - Welcome</title>
+</head>
+<body>
+
+    <!-- Header bar -->
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand">Content Management</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li ng-class="{'Create Content' : 'active' }[$root.title]" ><a href="#/content/create">Create Content</a></li>
+                    <li ng-class="{'Edit Content' : 'active' }[$root.title]"><a href="#/content/edit">Edit Content</a></li>
+                    <li ng-class="{'Add Access Code' : 'active' }[$root.title]"><a href="#/content/add-code">Add Access Code</a></li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown">Ranga Jayawardana <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Profile</a></li>
+
+                            <li class="divider"></li>
+                            <li><a href="#">Sign Out</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <form class="navbar-form navbar-right" role="search">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="view-container">
+        <div ng-view class="view-frame"></div>
+    </div>
+
+</body>
+</html>

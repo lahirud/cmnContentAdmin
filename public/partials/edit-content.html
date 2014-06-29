@@ -1,0 +1,44 @@
+﻿<form class="form-horizontal" role="form">
+    <div class="form-group">
+        <label for="inputPassword3" class="col-sm-2 control-label">Title</label>
+        <div class="col-sm-4">
+            <input type="text" class="form-control" id="inputTitle" placeholder="Title of the content" ng-model="query">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputPassword3" class="col-sm-2 control-label">Subject</label>
+        <div class="col-sm-4">
+            <select class="form-control" id="selectSubject">
+                <option value="1">Computer</option>
+                <option value="1">Physics</option>
+                <option value="1">Chemistry</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-4">
+            <button type="submit" class="btn btn-default">Search</button>
+        </div>
+    </div>
+</form>
+
+<br />
+<br />
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-8">
+            
+            <table class="table" ng-table="tableParams" show-filter="true">
+
+                    <tr ng-repeat="content in $data | filter : query">
+                        <td data-title="'Content ID'" sortable="'contentId'" filter="{ 'contentId': 'text' }">{{ content.contentId }} </td>
+                        <td data-title="'Title'" sortable="'title'" filter="{ 'title': 'text' }">{{ content.title }} </td>
+                        <td data-title="'Subject'" sortable="'subject'" filter="{ 'subject': 'text' }">{{ content.subject }} </td>
+                        <td data-title="'ContentUrl'"><a href="{{ content.contentUrl }}">Link </a></td>
+                    </tr>
+                <!--</tbody>-->
+            </table>
+        </div>
+    </div>
+</div>

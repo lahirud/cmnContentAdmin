@@ -3,7 +3,10 @@
 # ~~~~
 
 # Home page
-GET / controllers.Application.index()
+GET / controllers.Assets.at(path="/public", file="index.html")
+GET /public/*file controllers.Assets.at(path="/public", file)
+GET /partials/*file controllers.Assets.at(path="/public/partials", file)
+
 GET /upload/ controllers.Application.upload()
 GET /create/ controllers.Application.create()
 GET /api/phones controllers.Application.getPhones()
