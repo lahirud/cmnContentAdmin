@@ -35,6 +35,22 @@ public class AccessCode{
   public static void create(AccessCode accesscode) {
     AccessCode.coll.save(accesscode);
   }
+  
+  public static AccessCode generate(){
+		Date date = new Date();
+		Calendar cal = Calendar.getInstance();  
+		cal.setTime(date);  
+		cal.add(Calendar.DATE, 30); // add 30 days  
+		date = cal.getTime();
+		
+		AccessCode m = new AccessCode();
+		m.accessCode = "cde" + System.nanoTime();
+		m.expirayDate = date;
+		m.redemptionQuota = 1;
+		m.noOfRedemptions = 0;
+		
+		return m;
+  }
 
   public static AccessCode findAccessCode(String accessCode) {
 	    

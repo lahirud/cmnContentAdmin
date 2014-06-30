@@ -1,0 +1,54 @@
+<div class="container">
+    <form class="form-horizontal" role="form">
+
+        <div class="form-group">
+            <!--<label for="inputTitle" class="col-sm-2 control-label">Title</label>-->
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="inputTitle" placeholder="File id here..."
+                    ng-model="searchTerm" required ng-change="onSearchTermChange(searchTerm)">
+            </div>
+            <div class="col-sm-4">
+
+                <button type="submit" class="btn btn-success" ng-click="cntSearchSubmit(searchTerm)" ng-disabled="isSearchDisabled">
+                    Search Content</button>
+            </div>
+            <label id="lblStatus" class="lblStatusMessage {{ $scope.statusMessage.type }}">{{ statusMessage }}</label>
+        </div>
+    </form>
+
+        <div class="row" ng-show="isTableDisplay">
+            <div class="col-sm-6">
+                <table class="table">
+                    <thead>
+                        <th>Select</th>
+                        <th>Content ID</th>
+                        <th>Title</th>
+                        <th>Content File</th>
+                        <th>Subject</th>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="cnt in tableData ">
+                            <td><span class="spanContentSelect" ng-click="checkChange(cnt.contentId, cnt.title)">Select</span>
+        </td>
+                            <td>{{ cnt.contentId }}</td>
+                            <td>{{ cnt.title }}</td>
+                            <td>{{ cnt.fileId }}</td>
+                            <td>{{ cnt.subject }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+                  
+        
+        <div class="row" ng-show="isContentSelected">
+
+            <div class="col-sm-6">
+
+                <button class="btn btn-info" ng-click="generateAccessCode()">Generate Access Code for {{ selectedContentTitle }}</button>
+                <br />
+                <br />
+                <label class="form-control" >{{accessKey}}</label>
+            </div>
+        </div>
+</div>

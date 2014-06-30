@@ -3,23 +3,36 @@
 # ~~~~
 
 # Home page
-GET / controllers.Application.index()
-GET /upload/ controllers.Application.upload()
-GET /create/ controllers.Application.create()
-GET /api/phones controllers.Application.getPhones()
-POST /api/phones/save controllers.Application.savePhone()
+GET / controllers.Assets.at(path="/public", file="index.html")
+GET /public/*file controllers.Assets.at(path="/public", file)
+GET /partials/*file controllers.Assets.at(path="/public/partials", file)
+
+#GET /upload/ controllers.Application.upload()
+#GET /create/ controllers.Application.create()
+#GET /api/phones controllers.Application.getPhones()
+#POST /api/phones/save controllers.Application.savePhone()
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
+#GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
 
-GET /tasks controllers.Application.tasks()
-POST /tasks controllers.Application.newTask()
-POST /tasks/:id/delete controllers.Application.deleteTask(id: String)
-
+<<<<<<< HEAD
 GET /admin/createContent controllers.Application.createContent()
 #GET /admin/findContent controllers.Application.findContent()
 GET /admin/createAccessCode controllers.Application.createAccessCode()
 GET /admin/createStudent controllers.Application.createStudent()
 GET /student/getDetails controllers.Application.getStudentDetails()
 GET /student/enrollContent controllers.Application.enrollContent()
+=======
+#GET /tasks controllers.Application.tasks()
+#POST /tasks controllers.Application.newTask()
+#POST /tasks/:id/delete controllers.Application.deleteTask(id: String)
+POST /content/create controllers.Application.createContent()
+#GET /content/accesscode controllers.Application.addAccessCode()
+#GET /accesscode controllers.Application.createAccessCode()
+
+POST /content/create controllers.Application.createContent()
+POST /content/find controllers.Application.findContent()
+POST /content/generateAccessCode controllers.Application.generateAccessCode()
+GET /content/all controllers.Application.getAllContents
+>>>>>>> 535043e81ba088abe6bae815627b479f8716ceb4

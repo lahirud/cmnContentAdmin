@@ -1,6 +1,8 @@
-/* app css stylesheet */
-
-body {
-  padding-top: 20px;
+﻿.lblStatusMessage {
+    color:green;
 }
-
+.spanContentSelect {
+    color:blue;
+    text-decoration:underline;
+    cursor:pointer;
+}
