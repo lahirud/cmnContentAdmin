@@ -120,11 +120,54 @@ public class Application extends Controller {
     	return ok(Json.toJson(myAccessCode.accessCode));
     }
     
-    public static Result findContent(){  //find content by fileId
+   /* public static Result findContent(){  //find content by fileId
     	
     	models.Content myContent = models.Content.findFileId("777.jpg"); // should get from request
     	return ok(myContent.contentId);
+    }*/
+    
+    public static Result createStudent() {
+    	models.Student myStudent = new models.Student();
+    	myStudent.studentId = "st" + System.nanoTime();
+    	myStudent.name = "Lahiru Dharmasena";
+    	myStudent.loginname = "lahirud";
+    	myStudent.password = "1qaz2wsx";
+    	myStudent.contents = new ArrayList();
+    	
+    	models.Student.create(myStudent);
+    	return ok("created");
     }
     
-
+    public static Result getStudentDetails(){
+    	
+    	models.Student myStudent = models.Student.findStudent("st1201750295103078"); // should get from request
+    	return ok(Json.toJson(myStudent));
+    }
+    
+    public static Result enrollContent(){
+    
+    	models.AccessCode myAccessCode = models.AccessCode.findAccessCode("cde895895745504247");// should get from request
+    	models.Student myStudent = models.Student.findStudent("st1201750295103078"); //Shoiuld pass from the request info
+    	models.Content myContent = models.Content.findContent(myAccessCode.contentID);
+    	
+    	if ( Integer.valueOf(myAccessCode.redemptionQuota) > Integer.valueOf(myAccessCode.noOfRedemptions)){
+    		
+    		myStudent.contents.add(myContent.fileId);
+        	models.Student.create(myStudent);
+    		myAccessCode.noOfRedemptions = myAccessCode.noOfRedemptions + 1;
+    		models.AccessCode.create(myAccessCode);
+    		return ok(Json.toJson(myStudent));
+    	}else{
+    		return ok("Access Code is invalid or Redemption quota expired");
+    	}
+    }
+    
+    public static Result addContentToStudent(String contentId){
+    	
+    	models.Student myStudent = models.Student.findStudent("st1201750295103078"); //Shoiuld pass from the request info
+    	models.Content myContent = models.Content.findContent(contentId);
+    	myStudent.contents.add(myContent.fileId);
+    	models.Student.create(myStudent);
+    	return ok("Content enrollment successfull");
+    }
 }

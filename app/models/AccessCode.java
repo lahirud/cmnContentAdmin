@@ -1,11 +1,14 @@
 package models;
 
 import java.util.*;
+
 import org.joda.time.DateTime;
+
 import play.modules.mongodb.jackson.MongoDB;
 import net.vz.mongodb.jackson.JacksonDBCollection;
 import net.vz.mongodb.jackson.Id;
 import net.vz.mongodb.jackson.ObjectId;
+
 import org.codehaus.jackson.annotate.JsonProperty;
 
 import javax.persistence.*;
@@ -33,4 +36,9 @@ public class AccessCode{
     AccessCode.coll.save(accesscode);
   }
 
+  public static AccessCode findAccessCode(String accessCode) {
+	    
+	  return AccessCode.coll.findOneById(accessCode);
+  }
+    
 }

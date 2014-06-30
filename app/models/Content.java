@@ -40,11 +40,11 @@ public class Content{
 	    //return cursor.next();
   }
   
-  public static Content findFileId(String fileId) {
+  /*public static Content findFileId(String fileId) {
 	  return Content.coll.find(DBQuery.is("fileid", fileId));
 	  
 	    //return cursor.next();
-  }
+  }*/
   
   public static void update(Content content) {
 	  
