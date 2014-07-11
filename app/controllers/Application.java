@@ -79,7 +79,7 @@ public class Application extends Controller {
 //    }
     
     
-    public static Result createContent() {
+    public static Result x_createContent() {
     	models.Content myContent = new models.Content();
     	myContent.contentId = "c" + System.nanoTime();
     	myContent.title = "test888";
@@ -91,14 +91,14 @@ public class Application extends Controller {
     	return ok("created");
     }
     
-<<<<<<< HEAD
     public static Result addAccessCodeToContent(String accessCode){
     	
     	models.Content myContent = models.Content.findContent("c894268118916719"); // should get from request
     	myContent.accesscode.add(accessCode); // should get from request
     	models.Content.create(myContent);
     	return ok("accesscode added");
-=======
+	}
+	
     @BodyParser.Of(BodyParser.Json.class)
     public static Result createContent() {
     	JsonNode json = request().body().asJson();
@@ -122,9 +122,6 @@ public class Application extends Controller {
     		response.put("message", "Error occured");
     		return badRequest(response);
     	}
-    	
-    	
->>>>>>> 535043e81ba088abe6bae815627b479f8716ceb4
     }
     
     @BodyParser.Of(BodyParser.Json.class)
@@ -152,7 +149,7 @@ public class Application extends Controller {
     	
     }
     
-<<<<<<< HEAD
+	public static Result createAccessCode() {
     	Date date = new Date();
     	Calendar cal = Calendar.getInstance();  
     	cal.setTime(date);  
@@ -224,7 +221,7 @@ public class Application extends Controller {
     	models.Student.create(myStudent);
     	return ok("Content enrollment successfull");
     }
-=======
+	
     @BodyParser.Of(BodyParser.Json.class)
     public static Result generateAccessCode() {
     	JsonNode json = request().body().asJson();
@@ -305,6 +302,4 @@ public class Application extends Controller {
 //    	models.AccessCode.create(myContent);
 //    	return ok("Access Code created");
 //    }
-
->>>>>>> 535043e81ba088abe6bae815627b479f8716ceb4
 }

@@ -11,11 +11,6 @@ import net.vz.mongodb.jackson.ObjectId;
 import net.vz.mongodb.jackson.WriteResult;
 
 import org.codehaus.jackson.annotate.JsonProperty;
-<<<<<<< HEAD
-import org.mongojack.*;
-import com.mongodb.QueryOperators;
-=======
->>>>>>> 535043e81ba088abe6bae815627b479f8716ceb4
 
 import javax.persistence.*;
 
@@ -49,25 +44,20 @@ public class Content{
 		  return false;
 	  }
   }
-
-<<<<<<< HEAD
-  public static Content findContent(String contentId) {
-=======
+	public static Content findContent(String contentId) {
+		    return Content.coll.findOneById(contentId);
+	    //return cursor.next();
+	}
+	
   public static Content findOneById(String contentId) {
->>>>>>> 535043e81ba088abe6bae815627b479f8716ceb4
 	    return Content.coll.findOneById(contentId);
 	    //return cursor.next();
   }
-  
-<<<<<<< HEAD
   /*public static Content findFileId(String fileId) {
 	  return Content.coll.find(DBQuery.is("fileid", fileId));
 	  
 	    //return cursor.next();
   }*/
-  
-  public static void update(Content content) {
-=======
   public static List<Content> find(String searchTerm) {
 	  DBCursor<Content> cursor =  Content.coll.find().is("title", searchTerm);
 	  List<Content> result = new ArrayList<Content>();
@@ -92,7 +82,6 @@ public class Content{
   
   public static boolean update(Content content) {
 	  WriteResult<Content, String> result = Content.coll.save(content);
->>>>>>> 535043e81ba088abe6bae815627b479f8716ceb4
 	  
 	  if(result.getError() == null){
 		  return true;
