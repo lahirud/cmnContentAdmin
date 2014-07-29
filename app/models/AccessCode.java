@@ -14,10 +14,6 @@ import org.codehaus.jackson.annotate.JsonProperty;
 import javax.persistence.*;
 
 public class AccessCode{
-    
-  /*@Id
-  @ObjectId
-  public String id;*/
   
   @Id
   public String accessCode;

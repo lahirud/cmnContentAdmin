@@ -15,10 +15,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 import javax.persistence.*;
 
 public class Content{
-    
-  /*@Id
-  @ObjectId
-  public String id;*/
+
   @Id
   public String contentId;
   public String title;
@@ -53,11 +50,7 @@ public class Content{
 	    return Content.coll.findOneById(contentId);
 	    //return cursor.next();
   }
-  /*public static Content findFileId(String fileId) {
-	  return Content.coll.find(DBQuery.is("fileid", fileId));
-	  
-	    //return cursor.next();
-  }*/
+
   public static List<Content> find(String searchTerm) {
 	  DBCursor<Content> cursor =  Content.coll.find().is("title", searchTerm);
 	  List<Content> result = new ArrayList<Content>();

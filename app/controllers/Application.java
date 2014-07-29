@@ -13,71 +13,12 @@ import play.mvc.*;
 import play.data.*;
 
 import models.*;
+import java.io.*;
+import java.net.HttpCookie;
 
 import views.html.*;
 
 public class Application extends Controller {
-
-//    public static Result index() {
-//        return ok(index.render("Welcome to Common Content Share!"));
-//    }
-    
-//    static Form<Task> taskForm = Form.form(Task.class);
-//    static Form<Phone> phoneForm = Form.form(Phone.class);
-    
-//    public static Result upload() {
-//    	return ok(upload.render("upload page"));
-//    }
-//    
-//    public static Result create() {
-//    	return ok(create.render());
-//    }
-//    
-//    public static Result index() {
-//      return redirect(routes.Application.tasks());
-//    }
-//    
-//    public static Result tasks() {
-//      return ok(
-//        index.render(Task.all(), taskForm)
-//      );
-//    }
-//    
-//    public static Result newTask() {
-//      Form<Task> filledForm = taskForm.bindFromRequest();
-//        if(filledForm.hasErrors()) {
-//          return badRequest(
-//            index.render(Task.all(), filledForm)
-//          );
-//        } else {
-//          Task.create(filledForm.get());
-//          return redirect(routes.Application.tasks());
-//        }
-//    }
-//    
-//    public static Result deleteTask(String id) {
-//      Task.delete(id);
-//      return redirect(routes.Application.tasks());
-//    }
-//    
-//    public static Result getPhones() {
-//    	return ok(Json.toJson(Phone.all()));
-//    }
-//    
-//    @BodyParser.Of(BodyParser.Json.class) 
-//    public static Result savePhone() {
-//		JsonNode json = request().body().asJson();
-//		Phone phone = new Phone();
-//		phone.name = json.findValue("name").asText();
-//		phone.id = json.findPath("id").asText();
-//		phone.age = json.findPath("age").asInt();
-//		
-//		Phone.create(phone);
-//		
-//		return redirect(routes.Application.getPhones());
-//
-//    }
-    
     
     public static Result x_createContent() {
     	models.Content myContent = new models.Content();
@@ -171,12 +112,6 @@ public class Application extends Controller {
     	return ok(Json.toJson(myAccessCode.accessCode));
     }
     
-   /* public static Result findContent(){  //find content by fileId
-    	
-    	models.Content myContent = models.Content.findFileId("777.jpg"); // should get from request
-    	return ok(myContent.contentId);
-    }*/
-    
     public static Result createStudent() {
     	models.Student myStudent = new models.Student();
     	myStudent.studentId = "st" + System.nanoTime();
@@ -254,7 +189,7 @@ public class Application extends Controller {
     @BodyParser.Of(BodyParser.Json.class)
     public static Result getAllContents() {
     	JsonNode json = request().body().asJson();
-    	
+
     	List<models.Content> result = models.Content.findAll();
     	
     	ObjectMapper mapper = new ObjectMapper();
@@ -271,35 +206,39 @@ public class Application extends Controller {
     		response.put("message", "No result found!");
     		return ok(response);
     	}
-    	
-    	
-    }    
+    }
     
+    public static Result uploadContent(){
+    	
+    	Http.MultipartFormData body = request().body().asMultipartFormData();
+    	
+    	Http.MultipartFormData.FilePart picture = body.getFile("file");
+        if (picture != null) {
+            String fileName = picture.getFilename();
+            String contentType = picture.getContentType();
+            File file = picture.getFile();
+
+            ContentFile.saveFile(file, fileName, contentType);
+            return ok("File uploaded");
+        } else {
+            flash("error", "Missing file");
+            return ok("Upload failiure");
+        }
+
+    }
     
-//    public static Result addAccessCode(){
-//    	
-//    	models.Content myContent = models.Content.findOneById("c894268118916719"); // should get from request
-//    	myContent.accesscode.add("cde802085812928555"); // should get from request
-//    	models.Content.create(myContent);
-//    	return ok("accesscode added");
-//    }
-//    
-//    public static Result createAccessCode() {
-//    
-//    	Date date = new Date();
-//    	Calendar cal = Calendar.getInstance();  
-//    	cal.setTime(date);  
-//    	cal.add(Calendar.DATE, 30); // add 30 days  
-//    	date = cal.getTime();
-//    	
-//    	models.AccessCode myContent = new models.AccessCode();
-//    	myContent.accessCode = "cde" + System.nanoTime();
-//    	myContent.expirayDate = date;
-//    	myContent.redemptionQuota = 1;
-//    	myContent.noOfRedemptions = 0;
-//    	myContent.contentID = "c894268118916719"; // should come from the request
-//    	
-//    	models.AccessCode.create(myContent);
-//    	return ok("Access Code created");
-//    }
+    @BodyParser.Of(BodyParser.Json.class)
+    public static Result getContent(String fileName) {
+    	JsonNode json = request().body().asJson();
+    	//String contentId = json.path("fileId").asText();
+    	
+    	List<Object> result = ContentFile.getFile(fileName);
+    	
+    	InputStream file = (InputStream) result.get(0);
+    	String contentType = (String) result.get(1);
+    	
+    	response().setContentType(contentType);
+    	return ok(file);
+    	
+    }
 }

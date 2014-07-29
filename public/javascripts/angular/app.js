@@ -5,7 +5,6 @@
 var contentApp = angular.module('contentApp', [
   'ngRoute',
   'contentAppAnimations',
-
   'contentAppControllers',
   'contentAppFilters',
   'contentAppServices'
