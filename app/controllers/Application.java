@@ -209,21 +209,40 @@ public class Application extends Controller {
     }
     
     public static Result uploadContent(){
+    	String contentId = "c" + System.nanoTime();
     	
     	Http.MultipartFormData body = request().body().asMultipartFormData();
+    	String title = body.asFormUrlEncoded().get("title")[0];
+    	String subject = body.asFormUrlEncoded().get("subject")[0];
+    	String fileId = body.asFormUrlEncoded().get("subject")[0];
     	
     	Http.MultipartFormData.FilePart picture = body.getFile("file");
         if (picture != null) {
-            String fileName = picture.getFilename();
             String contentType = picture.getContentType();
             File file = picture.getFile();
 
-            ContentFile.saveFile(file, fileName, contentType);
-            return ok("File uploaded");
-        } else {
-            flash("error", "Missing file");
-            return ok("Upload failiure");
+            ContentFile.saveFile(file, contentId, contentType);
         }
+        
+    	models.Content myContent = new models.Content();
+    	myContent.contentId = contentId;
+    	myContent.title = title;
+    	myContent.subject = subject;
+    	myContent.fileId = fileId;
+    	myContent.accesscode = new ArrayList();
+    	
+    	boolean result = models.Content.create(myContent);
+    	
+    	ObjectNode response = Json.newObject();
+    	
+    	if (result) {
+    		response.put("status", "OK");
+    		return ok(response);
+    	} else {
+    		response.put("status", "NG");
+    		response.put("message", "Error occured");
+    		return badRequest(response);
+    	}
 
     }
     

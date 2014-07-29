@@ -35,7 +35,7 @@
                         <td data-title="'Content ID'" sortable="'contentId'" filter="{ 'contentId': 'text' }">{{ content.contentId }} </td>
                         <td data-title="'Title'" sortable="'title'" filter="{ 'title': 'text' }">{{ content.title }} </td>
                         <td data-title="'Subject'" sortable="'subject'" filter="{ 'subject': 'text' }">{{ content.subject }} </td>
-                        <td data-title="'ContentUrl'"><a href="{{ content.contentUrl }}">Link </a></td>
+                        <td data-title="'ContentUrl'"><a href="/content/get/{{ content.contentId }}" target="_blank">Link </a></td>
                     </tr>
                 <!--</tbody>-->
             </table>
