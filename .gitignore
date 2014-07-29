@@ -14,4 +14,4 @@ dist
 /RUNNING_PID
 /.settings
 /bin/
-/public/bower_component/
+/public/bower_components/
