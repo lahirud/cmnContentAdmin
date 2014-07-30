@@ -1,11 +1,13 @@
 {
-  "name": "public",
-  "version": "0.0.0",
+  "name": "cmnContentAdmin",
+  "version": "0.0.1",
   "homepage": "https://github.com/lahirud/cmnContentAdmin",
   "authors": [
     "Lahiru Dharmasena <lahiru82@gmail.com>"
   ],
+  "description": "Content Mgt system",
   "license": "MIT",
+  "private": true,
   "ignore": [
     "**/.*",
     "node_modules",
@@ -15,11 +17,12 @@
   ],
   "dependencies": {
     "angular-animate": "~1.2.x",
-    "angular-resource": "~1.2.x",
-    "angular-route": "~1.2.x",
     "angular-mocks": "~1.2.x",
-    "ng-file-upload": "~1.6.3",
+    "angular-bootstrap": "~0.11.0",
+    "angular-route": "~1.2.x",
+    "angular-resource": "~1.2.x",
+    "ng-table": "~0.3.x",
     "bootstrap": "~3.1.1",
-    "ng-table": "~0.3.x"
+    "ng-file-upload": "~1.6.3"
   }
 }

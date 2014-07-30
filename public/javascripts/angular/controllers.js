@@ -2,12 +2,13 @@
 
 /* Controllers */
 
-var contentAppControllers = angular.module('contentAppControllers', ['ngTable', 'angularFileUpload' ]);
+var contentAppControllers = angular.module('contentAppControllers', ['ngTable', 'angularFileUpload', 'ui.bootstrap' ]);
 
 
 contentAppControllers.controller('ContentCreateCtrl', ['$scope', '$http', '$upload',
     function ($scope, $http, $upload) {
         $scope.isAllFieldsEntered = true;
+        $scope.cnt = {};
 
         $scope.onInputChange = function (cnt) {
             
@@ -20,7 +21,11 @@ contentAppControllers.controller('ContentCreateCtrl', ['$scope', '$http', '$uplo
         
         $scope.onFileSelect = function($files) {
             $scope.selectedfiles = $files;
-        };
+            
+            if(($scope.cnt.fileId == undefined || $scope.cnt.fileId == "") && $files.length > 0) {
+                $scope.cnt.fileId = $files[0].name;
+            }
+        }
 
           $scope.cntFormSubmit = function () {
               
@@ -41,7 +46,8 @@ contentAppControllers.controller('ContentCreateCtrl', ['$scope', '$http', '$uplo
                   // customize how data is added to formData. See #40#issuecomment-28612000 for sample code
                   //formDataAppender: function(formData, key, val){}
                 }).progress(function(evt) {
-                  console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
+                    $scope.dynamic =  parseInt(100.0 * evt.loaded / evt.total);
+                    console.log('percent: ' + parseInt(100.0 * evt.loaded / evt.total));
                 }).success(function(data, status, headers, config) {
                   if (data.status == 'OK') {
                       $scope.statusMessage = "Content Added successfully";
@@ -61,7 +67,7 @@ contentAppControllers.controller('ContentCreateCtrl', ['$scope', '$http', '$uplo
                  It could also be used to monitor the progress of a normal http post/put request with large data*/
               // $scope.upload = $upload.http({...})  see 88#issuecomment-31366487 for sample code.
 
-          };
+          }
           
 //        $scope.cntFormSubmit = function (cnt) {
 //            $http({
@@ -83,7 +89,11 @@ contentAppControllers.controller('ContentCreateCtrl', ['$scope', '$http', '$uplo
 //        };
 
         $scope.reset = function () {
-            $scope.cnt.title = '';
+            $scope.cnt = {};
+            $scope.dynamic = 0;
+            $scope.statusMessage = "";
+            $scope.selectedfiles = {};
+            
         }
     }
 ]);

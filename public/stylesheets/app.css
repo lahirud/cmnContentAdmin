@@ -1,8 +1,12 @@
-﻿.lblStatusMessage {
+.lblStatusMessage {
     color:green;
 }
 .spanContentSelect {
     color:blue;
     text-decoration:underline;
     cursor:pointer;
+}
+
+.padding-top {
+	margin-top: 10px;
 }
