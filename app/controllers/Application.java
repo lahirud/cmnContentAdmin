@@ -334,8 +334,6 @@ public class Application extends Controller {
     	
     	ObjectNode response = Json.newObject();
     	
-    	System.out.println("passwordHashed:"+passwordHashed + " user.hash:"+ user.passwordHash);
-    	
     	if (passwordHashed.equals(user.passwordHash)) {
     		response.put("status", "OK");
     		response.put("user.username", user.username);
