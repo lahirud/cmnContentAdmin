@@ -42,8 +42,6 @@ public class ContentFile {
             // save the image file into mongoDB
             gfsFile.save();
 
-            System.out.println("Done");
-
         } catch (Exception e) {
             e.printStackTrace();
         } 
@@ -61,9 +59,6 @@ public class ContentFile {
 
             // get image file by it's filename
             GridFSDBFile imageForOutput = gfsPhoto.findOne(fileName);
-            
-            
-            System.out.println("Done");
             
             result.add(imageForOutput.getInputStream());
             result.add(imageForOutput.getContentType());

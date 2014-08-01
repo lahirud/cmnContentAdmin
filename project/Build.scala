@@ -9,7 +9,8 @@ object ApplicationBuild extends Build {
 val appDependencies = Seq(
     javaCore,
     "net.vz.mongodb.jackson" %% "play-mongo-jackson-mapper" % "1.1.0",
-    "org.mongodb" % "mongo-java-driver" % "2.8.0"
+    "org.mongodb" % "mongo-java-driver" % "2.8.0",
+    "org.mindrot" % "jbcrypt" % "0.3m"
 )
 
 

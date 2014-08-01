@@ -4,6 +4,95 @@
 
 var contentAppControllers = angular.module('contentAppControllers', ['ngTable', 'angularFileUpload', 'ui.bootstrap' ]);
 
+contentAppControllers.controller('manageUsersController', function ($scope, $rootScope, $http, $window) {
+    $rootScope.hideNaviBar = false;
+    
+    $http.get('/user/all').success(function (data) {
+        $scope.tableData = data.users;
+    });
+    
+    $scope.createUser = function (_user) {
+        //alert(JSON.stringify(_user));
+        if (_user.password === undefined || _user.password === ''){
+            $scope.modelMessage = 'Please provide a password';
+            return;
+        }
+        
+        if (_user.confirmPassword === undefined || _user.confirmPassword === '') {
+            $scope.modelMessage = 'Confirm password required!';
+            return;
+        }
+        
+        if (_user.password != _user.confirmPassword) {
+            $scope.modelMessage = "Passwords don't match!";
+            return;
+        }
+        
+        if (_user.email === undefined || _user.email === '') {
+            $scope.modelMessage = 'Please provide a valid email';
+            return;
+        }
+
+        $http({
+            method: 'POST',
+            url: '/user/create',
+            data: _user
+        }).
+        success(function (data, status, headers, config) {
+            if (data.status == 'OK') {
+                $scope.modelMessage = '';
+                $scope.tableData = data.users;
+                $('#myModal').modal('hide');
+            } else if (data.status == 'NG') {
+                $scope.statusMessage = "Error creating user. Please try again";
+            }
+
+        }).
+        error(function (data, status, headers, config) {
+            $scope.modelMessage = 'Error creating user. Please try again.'
+        });
+    }
+    
+    $scope.deleteUser = function (username) {
+        $http({
+            method: 'DELETE',
+            url: '/user/'+username
+        }).
+        success(function (data, status, headers, config) {
+            if (data.status == 'OK') {
+                $scope.tableData = data.users;
+            } else if (data.status == 'NG') {
+                $scope.statusMessage = "Error creating user. Please try again";
+            }
+
+        }).
+        error(function (data, status, headers, config) {
+            $scope.modelMessage = 'Error creating user. Please try again.'
+        });
+    }
+
+});
+
+contentAppControllers.controller('loginController', function ($scope, $rootScope, AuthService, $location) {
+
+    $rootScope.hideNaviBar = true;
+
+    $scope.login = function (credentials) {
+        $scope.isSubmitedOnce = true;
+
+        if ($scope.formLogin.$valid) {
+            AuthService.login(credentials).then(function () {
+                console.log('login-success');
+                $rootScope.hideNaviBar = false;
+                $location.path("/content/create");
+            }, function () {
+                console.log('login-faild');
+                $scope.isLoginError = true;
+                $scope.loginErrorMessage = 'Incorrect username or password. Please try again.';
+            });
+        }
+    }
+});
 
 contentAppControllers.controller('ContentCreateCtrl', ['$scope', '$http', '$upload',
     function ($scope, $http, $upload) {

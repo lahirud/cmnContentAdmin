@@ -1,6 +1,10 @@
 .lblStatusMessage {
     color:green;
 }
+
+.lblStatusMessage.error {
+	color: red;
+}
 .spanContentSelect {
     color:blue;
     text-decoration:underline;
@@ -9,4 +13,21 @@
 
 .padding-top {
 	margin-top: 10px;
+}
+
+#loginContainer {
+    background-color:#eeeeee;
+    padding:50px 30px;
+}
+.spanErrorMessage {
+    color:red;
+}
+.lnkBasic {
+    text-decoration:underline;
+    cursor:pointer;
+}
+.spanContentAction {
+    cursor:pointer;
+    margin-right:10px;
+    text-decoration:underline;
 }

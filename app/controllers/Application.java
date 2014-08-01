@@ -18,6 +18,8 @@ import java.net.HttpCookie;
 
 import views.html.*;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 public class Application extends Controller {
     
     public static Result x_createContent() {
@@ -186,9 +188,7 @@ public class Application extends Controller {
     	
     }
     
-    @BodyParser.Of(BodyParser.Json.class)
     public static Result getAllContents() {
-    	JsonNode json = request().body().asJson();
 
     	List<models.Content> result = models.Content.findAll();
     	
@@ -259,5 +259,94 @@ public class Application extends Controller {
     	response().setContentType(contentType);
     	return ok(file);
     	
+    }
+    
+    @BodyParser.Of(BodyParser.Json.class)
+    public static Result createUser() {
+    	JsonNode json = request().body().asJson();
+    	models.User user = new models.User();
+    	
+    	user.username =  json.path("userName").asText();
+    	user.name = json.path("name").asText();
+    	user.passwordHash = BCrypt.hashpw(json.path("password").asText(), BCrypt.gensalt());
+    	user.role = json.path("role").asText();
+    	user.email = json.path("email").asText();
+    	
+    	boolean result = models.User.create(user);
+    	
+    	ObjectNode response = Json.newObject();
+    	
+    	if (result) {
+    		return getAllUsers();
+    	} else {
+    		response.put("status", "NG");
+    		response.put("message", "Error occured");
+    		return badRequest(response);
+    	}
+    	
+    }
+    
+    public static Result getAllUsers() {
+    	List<models.User> result = models.User.findAll();
+    	
+    	ObjectMapper mapper = new ObjectMapper();
+    	JsonNode users = mapper.convertValue(result, JsonNode.class);
+    	
+    	ObjectNode response = Json.newObject();
+    	
+    	if (result.size() >= 0) {
+    		response.put("status", "OK");
+    		response.put("users", users);
+    		return ok(response);
+    	} else {
+    		response.put("status", "NG");
+    		response.put("message", "No result found!");
+    		return ok(response);
+    	}
+    }
+    
+    public static Result deleteUser(String username) {
+    	models.User user = new models.User();
+    	user.username = username;
+    	
+    	boolean result = models.User.delete(user);
+    	
+    	ObjectNode response = Json.newObject();
+    	
+    	if (result == true) {
+    		return getAllUsers();
+    	} else {
+    		response.put("status", "NG");
+    		response.put("message", "Error occured");
+    		return badRequest(response);
+    	}
+    }
+    
+    @BodyParser.Of(BodyParser.Json.class)
+    public static Result loginUser(){
+    	JsonNode json = request().body().asJson();
+    	String username = json.path("username").asText();
+    	String password = json.path("password").asText();
+    	
+    	
+    	models.User user = models.User.findUser(username);
+    	String passwordHashed = BCrypt.hashpw(password, user.passwordHash);
+    	
+    	ObjectNode response = Json.newObject();
+    	
+    	System.out.println("passwordHashed:"+passwordHashed + " user.hash:"+ user.passwordHash);
+    	
+    	if (passwordHashed.equals(user.passwordHash)) {
+    		response.put("status", "OK");
+    		response.put("user.username", user.username);
+    		return ok(response);
+    	} else {
+    		response.put("status", "NG");
+    		return badRequest(response);
+    	}
+    }
+    
+    public static Result logoutUser(){
+    	return ok("logout");
     }
 }

@@ -1,0 +1,38 @@
+﻿<div class="row" >
+    <div class="col-sm-4 col-sm-offset-4" id="loginContainer">
+        <form name="formLogin" novalidate>
+            <div class="form-group">
+                <label for="inputUserName">User Name</label>
+                <input type="text" class="form-control" name="inputUserName" placeholder="Enter user name"
+                    ng-model="credentials.username" required>
+                <span class="spanErrorMessage" ng-show="formLogin.inputUserName.$error.required && isSubmitedOnce">Please enter your user name.</span>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword">Password</label>
+                <input type="password" class="form-control" name="inputPassword" placeholder="Password"
+                    ng-model="credentials.password" required>
+                <span class="spanErrorMessage" ng-show="formLogin.inputPassword.$error.required && isSubmitedOnce">Please enter your password.</span>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" ng-model="credentials.isPersistentLogin">
+                    Remember Me on this device
+                </label>
+            </div>
+            <div class="spanErrorMessage" ng-show="isLoginError" style="margin-bottom: 5px">{{loginErrorMessage}}</div>
+            <button ng-click="login(credentials)" class="btn btn-success" style="background-color: #00A15F; width: 100px;">Login</button>
+
+        </form>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $('#loginContainer').css('margin-top', ($(window).height() / 2 - $('#loginContainer').height() / 2 - 50));
+    });
+
+    $(window).resize(function () {
+        $('#loginContainer').css('margin-top', ($(window).height() / 2 - $('#loginContainer').height() / 2 - 50));
+    });
+</script>

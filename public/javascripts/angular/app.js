@@ -28,7 +28,17 @@ contentApp.config(['$routeProvider',
             controller: 'AccessCodeAdd',
             title: 'Add Accesss Code'
         }).
+        when('/login', {
+            templateUrl: 'partials/login.html',
+            controller: 'loginController',
+            title: 'Login'
+        }).
+        when('/account/manageusers', {
+            templateUrl: 'partials/manage-users.html',
+            controller: 'manageUsersController',
+            title: 'Manage Users'
+        }).
         otherwise({
-            redirectTo: '/content/create'
+            redirectTo: '/login'
         });
   }]);

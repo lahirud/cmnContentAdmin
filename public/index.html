@@ -24,13 +24,14 @@
     <script src="public/javascripts/angular/services.js"></script>
     <script src="public/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="public/bower_components/ng-table/ng-table.min.js"></script>
+    <script src="public/bower_components/angular-cookies/angular-cookies.js"></script>
 
     <title ng-bind="'CMS - ' + $root.title">CMS - Welcome</title>
 </head>
 <body>
 
     <!-- Header bar -->
-    <nav class="navbar navbar-default" role="navigation">
+    <nav class="navbar navbar-default" role="navigation" ng-hide="hideNaviBar">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -49,6 +50,9 @@
                     <li ng-class="{'Create Content' : 'active' }[$root.title]" ><a href="#/content/create">Create Content</a></li>
                     <li ng-class="{'Edit Content' : 'active' }[$root.title]"><a href="#/content/edit">Edit Content</a></li>
                     <li ng-class="{'Add Access Code' : 'active' }[$root.title]"><a href="#/content/add-code">Add Access Code</a></li>
+                    <li  ng-class="{'Manage Users' : 'active' }[$root.title] || {'Edit Content' : 'active' }[$root.title]">
+                        <a href="#/account/manageusers">Manage Users</a>
+                    </li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
